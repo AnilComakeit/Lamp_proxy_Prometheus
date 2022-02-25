@@ -1,0 +1,50 @@
+version: '3'
+services:
+  web-server:
+    container_name: server-test
+    build:
+      dockerfile: Dockerfile
+      context: .
+    # restart: always
+    volumes:
+      - "./html/:/var/www/html/"
+    ports:
+      - "8009:80"
+    networks:
+      - frontendtest
+      - backendtest
+  mysql-server:
+    image: mysql
+    container_name: mysql-test
+    # restart: always
+    networks: 
+      - backendtest    
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: testdb
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    # restart: always
+    container_name: phpmyadmin-test
+    environment:
+      PMA_HOST: mysql-server
+      PMA_USER: root
+      PMA_DATABASE: testdb
+      PMA_PASSWORD: 123
+    ports:
+      - "8019:80"
+    networks: 
+      - frontendtest
+
+volumes:
+  mysql-data:
+
+networks:
+  backendtest:
+  frontendtest:
+

@@ -1,0 +1,52 @@
+version: '3'
+services:
+  web-server:
+    container_name: server-dev
+    build:
+      dockerfile: Dockerfile
+      context: .
+    # restart: always
+    volumes:
+      - "./html/:/var/www/html/"
+    ports:
+      - "8008:80"
+    networks:
+      - frontenddev
+      - backenddev
+  mysql-server:
+    image: mysql
+    container_name: mysql-dev
+    # restart: always
+    networks: 
+      - backenddev
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: devdb
+    
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    # restart: always
+    container_name: phpmyadmin-dev
+    environment:
+      PMA_HOST: mysql-server
+      PMA_USER: root
+      PMA_DATABASE: devdb
+      PMA_PASSWORD: 123
+     
+    ports:
+      - "8018:80"
+    networks: 
+      - frontenddev
+
+volumes:
+  mysql-data:
+
+networks:
+  backenddev:
+  frontenddev:
+
