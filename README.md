@@ -32,5 +32,5 @@
 >
 
 ### Team
-> [@myself](https://github.com/SivaKumarK1)
+> [@sivaKumarK1](https://github.com/SivaKumarK1)
 > [@AnilComakeit](https://github.com/AnilComakeit)
